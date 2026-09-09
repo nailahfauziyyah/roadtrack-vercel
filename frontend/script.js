@@ -638,7 +638,7 @@ function createPopup(properties) {
 // 16. LOAD GEOJSON
 // ==========================================
 
-fetch("../data/rute_final.geojson")
+fetch("data/rute_final.geojson")
 
     .then(function(response) {
 
