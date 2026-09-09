@@ -640,6 +640,7 @@ function createPopup(properties) {
 
 fetch("data/rute_final.geojson")
 
+
     .then(function(response) {
 
         if (!response.ok) {
