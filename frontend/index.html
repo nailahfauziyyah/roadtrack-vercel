@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadTrack - Operational Route Monitoring</title>
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Icon -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-route"></i>
+            </div>
+
+            <div>
+                <h1>RoadTrack</h1>
+                <p>Operational Car Route Monitoring</p>
+            </div>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            <span>ROUTE MONITORING</span>
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="dashboard">
+
+        <!-- ================= WELCOME ================= -->
+        <section class="welcome">
+
+            <div>
+                <span class="eyebrow">
+                    <i class="fa-solid fa-car"></i>
+                    OPERATIONAL CAR ROUTE MONITORING
+                </span>
+
+                <h2>
+                    Pantau perjalanan mobil<br>
+                    <span>dalam satu peta.</span>
+                </h2>
+
+                <p>
+                    Lihat rute perjalanan mobil operasional, jarak tempuh,
+                    durasi, kecepatan, hingga estimasi penggunaan BBM.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- ================= SUMMARY ================= -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <div class="summary-icon pink">
+                    <i class="fa-solid fa-road"></i>
+                </div>
+
+                <div>
+                    <span>Total Trips</span>
+                    <strong id="total-trip">9</strong>
+                    <small>perjalanan</small>
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="summary-icon purple">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+
+                <div>
+                    <span>Total Distance</span>
+                    <strong id="total-distance">-</strong>
+                    <small>kilometer</small>
+                </div>
+            </div>
+
+
+            <!-- ================= TAMBAHAN ESTIMATION ================= -->
+            <div class="summary-card">
+                <div class="summary-icon peach">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+
+                <div>
+                    <span>Estimation</span>
+                    <strong id="total-estimation">-</strong>
+                    <small>estimasi durasi</small>
+                </div>
+            </div>
+            <!-- ================= SELESAI TAMBAHAN ================= -->
+
+
+            <div class="summary-card">
+                <div class="summary-icon peach">
+                    <i class="fa-solid fa-gas-pump"></i>
+                </div>
+
+                <div>
+                    <span>Total Fuel</span>
+                    <strong id="total-fuel">-</strong>
+                    <small>liter</small>
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="summary-icon dark">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div>
+                    <span>Total Cost</span>
+                    <strong id="total-cost">-</strong>
+                    <small>estimasi BBM</small>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONTROL ================= -->
+        <section class="control-panel">
+
+            <div class="control-title">
+
+                <div class="control-icon">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+
+                <div>
+                    <h3>Route Explorer</h3>
+                    <p>Pilih perjalanan untuk melihat detail rute.</p>
+                </div>
+
+            </div>
+
+
+            <div class="filter-area">
+
+                <label for="trip-filter">
+                    <i class="fa-solid fa-filter"></i>
+                    Select Route
+                </label>
+
+                <select id="trip-filter">
+                    <option value="all">Semua Perjalanan</option>
+                </select>
+
+
+                <!-- ================= TAMBAHAN SELECT DAY ================= -->
+                <label for="day-filter">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Select Day
+                </label>
+
+                <select id="day-filter">
+                    <option value="all">Semua Hari</option>
+                    <option value="1">Hari 1 — Trip 1–3</option>
+                    <option value="2">Hari 2 — Trip 4</option>
+                    <option value="3">Hari 3 — Trip 5</option>
+                    <option value="4">Hari 4 — Trip 6</option>
+                    <option value="5">Hari 5 — Trip 7</option>
+                    <option value="6">Hari 6 — Trip 8</option>
+                    <option value="7">Hari 7 — Trip 9</option>
+                </select>
+                <!-- ================= SELESAI TAMBAHAN ================= -->
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MAP ================= -->
+        <section class="map-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        OPERATIONAL CAR ROUTE MAP
+                    </span>
+
+                    <h3>Route Map</h3>
+                </div>
+
+                <div class="map-hint">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                    Klik garis rute untuk melihat detail
+                </div>
+
+            </div>
+
+
+            <div class="map-wrapper">
+
+                <div id="map"></div>
+
+                <div class="map-overlay">
+                    <div class="map-live">
+                        <span></span>
+                        Route Data
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TRIP DETAIL ================= -->
+        <section class="detail-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-circle-info"></i>
+                        TRIP INFORMATION
+                    </span>
+
+                    <h3>Trip Details</h3>
+                </div>
+
+            </div>
+
+
+            <div class="trip-detail">
+
+                <div class="trip-main">
+
+                    <div class="trip-number">
+                        <span>TRIP</span>
+                        <strong id="trip-number">—</strong>
+                    </div>
+
+                    <div class="trip-title">
+                        <span id="trip-name">
+                            Mobil Operasional • Driving
+                        </span>
+
+                        <h3 id="trip-route">
+                            Pilih rute pada peta
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="trip-stat">
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-road"></i>
+                        </div>
+
+                        <div>
+                            <span>Distance</span>
+                            <strong id="trip-distance">—</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+
+                        <div>
+                            <span>Duration</span>
+                            <strong id="trip-duration">—</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+
+                        <div>
+                            <span>Speed</span>
+                            <strong id="trip-speed">—</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-gas-pump"></i>
+                        </div>
+
+                        <div>
+                            <span>Fuel</span>
+                            <strong id="trip-fuel">—</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= VEHICLE INFO ================= -->
+        <section class="detail-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-car"></i>
+                        VEHICLE INFORMATION
+                    </span>
+
+                    <h3>Vehicle Information</h3>
+                </div>
+
+            </div>
+
+
+            <div class="trip-detail">
+
+                <div class="trip-stat">
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+
+                        <div>
+                            <span>Vehicle Type</span>
+                            <strong>Mobil Operasional</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+
+                        <div>
+                            <span>Routing Profile</span>
+                            <strong>Driving</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-gas-pump"></i>
+                        </div>
+
+                        <div>
+                            <span>Fuel Type</span>
+                            <strong>Pertalite</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-gauge"></i>
+                        </div>
+
+                        <div>
+                            <span>Fuel Consumption</span>
+                            <strong>12 km/L</strong>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+
+                        <div>
+                            <span>Fuel Price</span>
+                            <strong>Rp10.000/L</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <p style="margin: 15px 2px 0; color: #a18d96; font-size: 10px;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Estimasi BBM menggunakan Pertalite dengan asumsi konsumsi
+                    mobil sebesar 12 km/L dan harga Rp10.000/L.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= DATA LIMITATIONS ================= -->
+        <section class="detail-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        DATA LIMITATIONS
+                    </span>
+
+                    <h3>Data Limitations</h3>
+                </div>
+
+            </div>
+
+
+            <div class="trip-detail">
+
+                <p style="margin: 0; color: #a18d96; font-size: 11px; line-height: 1.8;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Data perjalanan merupakan data GPS yang telah diproses/simulasi,
+                    sehingga tidak sepenuhnya merepresentasikan perjalanan aktual secara real-time.
+                    Jarak dan durasi diperoleh melalui routing OSRM sehingga hasil dapat berbeda
+                    dengan kondisi perjalanan sebenarnya. Estimasi BBM menggunakan asumsi konsumsi
+                    mobil sebesar 12 km/L dan harga Pertalite Rp10.000/L, sehingga biaya yang
+                    ditampilkan bukan merupakan data transaksi BBM aktual.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+        <footer>
+
+            <div>
+                <strong>RoadTrack</strong>
+                <span>WebGIS Monitoring Perjalanan</span>
+            </div>
+
+            <div>
+                <span>Data rute berbasis OpenStreetMap & OSRM</span>
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- RoadTrack -->
+    <script src="script.js"></script>
+
+</body>
+</html>

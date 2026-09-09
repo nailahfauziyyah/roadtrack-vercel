@@ -1,0 +1,19 @@
+{
+  "kode_kendaraan": "K-10",
+  "kendaraan": "Mobil operasional",
+  "trayek": "Balaraja – Jakarta",
+  "jenis_bbm": "Pertalite",
+  "harga_per_liter": 10000,
+  "efisiensi_acuan": 12.0,
+  "jumlah_hari": 1,
+  "jumlah_trip": 3,
+  "total_km": 171.1,
+  "total_liter": 16.0,
+  "total_biaya": 160038,
+  "liter_idle": 0.1,
+  "liter_boros": 1.8,
+  "biaya_boros": 17500,
+  "catatan": "Data simulasi, bukan rekaman kendaraan sungguhan.",
+  "siang_trip": 3,
+  "siang_km_per_liter": 10.68
+}
