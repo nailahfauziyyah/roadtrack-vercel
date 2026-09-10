@@ -70,10 +70,21 @@ let allFeatures = [];
 
 
 // ==========================================
+// START / END MARKER
+// ==========================================
+
+let startEndLayer =
+    L.layerGroup().addTo(map);
+
+
+// ==========================================
 // 6. FORMAT ANGKA
 // ==========================================
 
-function formatNumber(value, decimals = 2) {
+function formatNumber(
+    value,
+    decimals = 2
+) {
 
     if (
         value === null ||
@@ -134,7 +145,8 @@ function getTripId(properties) {
 
 function getTrayek(properties) {
 
-    const tripId = getTripId(properties);
+    const tripId =
+        getTripId(properties);
 
     return (
         tripRoutes[tripId] ||
@@ -155,14 +167,20 @@ function getFuel(properties) {
         properties.fuel_liter !== undefined &&
         properties.fuel_liter !== null
     ) {
-        return Number(properties.fuel_liter);
+
+        return Number(
+            properties.fuel_liter
+        );
     }
 
     if (
         properties.liter_total !== undefined &&
         properties.liter_total !== null
     ) {
-        return Number(properties.liter_total);
+
+        return Number(
+            properties.liter_total
+        );
     }
 
     return null;
@@ -179,14 +197,20 @@ function getCost(properties) {
         properties.cost_rp !== undefined &&
         properties.cost_rp !== null
     ) {
-        return Number(properties.cost_rp);
+
+        return Number(
+            properties.cost_rp
+        );
     }
 
     if (
         properties.biaya_rp !== undefined &&
         properties.biaya_rp !== null
     ) {
-        return Number(properties.biaya_rp);
+
+        return Number(
+            properties.biaya_rp
+        );
     }
 
     return null;
@@ -204,7 +228,10 @@ function getMaxSpeed(properties) {
         properties.max_speed !== null &&
         properties.max_speed !== ""
     ) {
-        return Number(properties.max_speed);
+
+        return Number(
+            properties.max_speed
+        );
     }
 
     if (
@@ -212,19 +239,27 @@ function getMaxSpeed(properties) {
         properties.kecepatan_maks !== null &&
         properties.kecepatan_maks !== ""
     ) {
-        return Number(properties.kecepatan_maks);
+
+        return Number(
+            properties.kecepatan_maks
+        );
     }
 
-    // Data max speed dari GPS untuk Trip 1-3
     const tripMaxSpeed = {
+
         1: 41.6,
         2: 58.9,
         3: 36.2
+
     };
 
-    const tripId = getTripId(properties);
+    const tripId =
+        getTripId(properties);
 
-    if (tripMaxSpeed[tripId] !== undefined) {
+    if (
+        tripMaxSpeed[tripId] !== undefined
+    ) {
+
         return tripMaxSpeed[tripId];
     }
 
@@ -238,37 +273,73 @@ function getMaxSpeed(properties) {
 
 function updateTripInfo(properties) {
 
-    const tripId = getTripId(properties);
+    const tripId =
+        getTripId(properties);
 
-    const fuel = getFuel(properties);
-    const cost = getCost(properties);
-    const maxSpeed = getMaxSpeed(properties);
+    const fuel =
+        getFuel(properties);
+
+    const cost =
+        getCost(properties);
+
+    const maxSpeed =
+        getMaxSpeed(properties);
+
 
     const elements = {
 
-        number: document.getElementById("trip-number"),
+        number:
+            document.getElementById(
+                "trip-number"
+            ),
 
-        name: document.getElementById("trip-name"),
+        name:
+            document.getElementById(
+                "trip-name"
+            ),
 
-        route: document.getElementById("trip-route"),
+        route:
+            document.getElementById(
+                "trip-route"
+            ),
 
-        distance: document.getElementById("trip-distance"),
+        distance:
+            document.getElementById(
+                "trip-distance"
+            ),
 
-        duration: document.getElementById("trip-duration"),
+        duration:
+            document.getElementById(
+                "trip-duration"
+            ),
 
-        speed: document.getElementById("trip-speed"),
+        speed:
+            document.getElementById(
+                "trip-speed"
+            ),
 
-        fuel: document.getElementById("trip-fuel"),
+        fuel:
+            document.getElementById(
+                "trip-fuel"
+            ),
 
-        date: document.getElementById("trip-date"),
+        date:
+            document.getElementById(
+                "trip-date"
+            ),
 
-        maxSpeed: document.getElementById("trip-max-speed"),
+        maxSpeed:
+            document.getElementById(
+                "trip-max-speed"
+            ),
 
-        cost: document.getElementById("trip-cost")
+        cost:
+            document.getElementById(
+                "trip-cost"
+            )
     };
 
 
-    // TRIP NUMBER
     if (elements.number) {
 
         elements.number.textContent =
@@ -276,7 +347,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // NAMA
     if (elements.name) {
 
         elements.name.textContent =
@@ -285,7 +355,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // TRAYEK
     if (elements.route) {
 
         elements.route.textContent =
@@ -293,7 +362,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // JARAK
     if (elements.distance) {
 
         elements.distance.textContent =
@@ -304,7 +372,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // DURASI
     if (elements.duration) {
 
         elements.duration.textContent =
@@ -315,7 +382,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // KECEPATAN RATA-RATA
     if (elements.speed) {
 
         elements.speed.textContent =
@@ -326,7 +392,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // BBM
     if (elements.fuel) {
 
         if (fuel !== null) {
@@ -339,12 +404,12 @@ function updateTripInfo(properties) {
 
         } else {
 
-            elements.fuel.textContent = "-";
+            elements.fuel.textContent =
+                "-";
         }
     }
 
 
-    // TANGGAL
     if (elements.date) {
 
         elements.date.textContent =
@@ -352,7 +417,6 @@ function updateTripInfo(properties) {
     }
 
 
-    // MAX SPEED
     if (elements.maxSpeed) {
 
         if (maxSpeed !== null) {
@@ -365,12 +429,12 @@ function updateTripInfo(properties) {
 
         } else {
 
-            elements.maxSpeed.textContent = "-";
+            elements.maxSpeed.textContent =
+                "-";
         }
     }
 
 
-    // BIAYA
     if (elements.cost) {
 
         if (cost !== null) {
@@ -380,7 +444,8 @@ function updateTripInfo(properties) {
 
         } else {
 
-            elements.cost.textContent = "-";
+            elements.cost.textContent =
+                "-";
         }
     }
 }
@@ -393,61 +458,56 @@ function updateTripInfo(properties) {
 function updateSummary(features) {
 
     let totalDistance = 0;
-
-    // ======================================
-    // TAMBAHAN:
-    // TOTAL DURASI PERJALANAN
-    // ======================================
     let totalDuration = 0;
-
     let totalFuel = 0;
     let totalCost = 0;
 
 
-    features.forEach(function(feature) {
+    features.forEach(
+        function(feature) {
 
-        const p = feature.properties;
+            const p =
+                feature.properties;
 
-        totalDistance +=
-            Number(p.jarak_km) || 0;
+            totalDistance +=
+                Number(p.jarak_km) || 0;
 
+            totalDuration +=
+                Number(p.durasi_menit) || 0;
 
-        // ==================================
-        // TAMBAHAN:
-        // MENJUMLAHKAN DURASI OSRM
-        // ==================================
-        totalDuration +=
-            Number(p.durasi_menit) || 0;
+            totalFuel +=
+                Number(getFuel(p)) || 0;
 
-
-        totalFuel +=
-            Number(getFuel(p)) || 0;
-
-        totalCost +=
-            Number(getCost(p)) || 0;
-    });
+            totalCost +=
+                Number(getCost(p)) || 0;
+        }
+    );
 
 
     const totalTrip =
-        document.getElementById("total-trip");
+        document.getElementById(
+            "total-trip"
+        );
 
     const totalDistanceElement =
-        document.getElementById("total-distance");
+        document.getElementById(
+            "total-distance"
+        );
 
-
-    // ======================================
-    // TAMBAHAN:
-    // ELEMENT ESTIMATION
-    // ======================================
     const totalEstimationElement =
-        document.getElementById("total-estimation");
-
+        document.getElementById(
+            "total-estimation"
+        );
 
     const totalFuelElement =
-        document.getElementById("total-fuel");
+        document.getElementById(
+            "total-fuel"
+        );
 
     const totalCostElement =
-        document.getElementById("total-cost");
+        document.getElementById(
+            "total-cost"
+        );
 
 
     if (totalTrip) {
@@ -466,11 +526,6 @@ function updateSummary(features) {
             ) + " km";
     }
 
-
-    // ======================================
-    // TAMBAHAN:
-    // FORMAT ESTIMASI DURASI
-    // ======================================
 
     if (totalEstimationElement) {
 
@@ -537,13 +592,19 @@ function createPopup(properties) {
 
     const maxSpeedText =
         maxSpeed !== null
-            ? formatNumber(maxSpeed, 1) + " km/jam"
+            ? formatNumber(
+                maxSpeed,
+                1
+            ) + " km/jam"
             : "-";
 
 
     const fuelText =
         fuel !== null
-            ? formatNumber(fuel, 2) + " liter"
+            ? formatNumber(
+                fuel,
+                2
+            ) + " liter"
             : "-";
 
 
@@ -552,11 +613,6 @@ function createPopup(properties) {
             ? formatRupiah(cost)
             : "-";
 
-
-    // ======================================
-    // EDITAN:
-    // POPUP MENYESUAIKAN UKURAN
-    // ======================================
 
     return `
         <div style="
@@ -635,235 +691,464 @@ function createPopup(properties) {
 
 
 // ==========================================
-// 16. LOAD GEOJSON
+// 16. START / END ICON
 // ==========================================
 
-fetch("data/rute_final.geojson")
+const startIcon = L.divIcon({
+
+    className:
+        "start-marker",
+
+    html: `
+        <div style="
+            width:14px;
+            height:14px;
+            background:#22c55e;
+            border:3px solid white;
+            border-radius:50%;
+            box-shadow:0 2px 6px rgba(0,0,0,0.3);
+        "></div>
+    `,
+
+    iconSize: [
+        20,
+        20
+    ],
+
+    iconAnchor: [
+        10,
+        10
+    ]
+});
 
 
-    .then(function(response) {
+const endIcon = L.divIcon({
 
-        if (!response.ok) {
+    className:
+        "end-marker",
 
-            throw new Error(
-                "rute_final.geojson tidak ditemukan"
-            );
-        }
+    html: `
+        <div style="
+            width:14px;
+            height:14px;
+            background:#ef4444;
+            border:3px solid white;
+            border-radius:50%;
+            box-shadow:0 2px 6px rgba(0,0,0,0.3);
+        "></div>
+    `,
 
-        return response.json();
-    })
+    iconSize: [
+        20,
+        20
+    ],
 
-
-    .then(function(data) {
-
-        console.log(
-            "GeoJSON OSRM berhasil dimuat:",
-            data
-        );
-
-
-        if (
-            !data.features ||
-            data.features.length === 0
-        ) {
-
-            throw new Error(
-                "GeoJSON tidak memiliki data"
-            );
-        }
+    iconAnchor: [
+        10,
+        10
+    ]
+});
 
 
-        allFeatures =
-            data.features;
+// ==========================================
+// 17. BUAT START / END MARKER
+// ==========================================
+
+function createStartEndMarkers(features) {
+
+    startEndLayer.clearLayers();
 
 
-        // ==================================
-        // SUMMARY AWAL
-        // ==================================
+    features.forEach(
+        function(feature) {
 
-        updateSummary(
-            allFeatures
-        );
+            const tripId =
+                getTripId(
+                    feature.properties
+                );
 
-
-        // ==================================
-        // FILTER
-        // ==================================
-
-        const tripFilter =
-            document.getElementById(
-                "trip-filter"
-            );
+            const coordinates =
+                feature.geometry.coordinates;
 
 
-        if (tripFilter) {
-
-            tripFilter.innerHTML = `
-                <option value="all">
-                    Semua Perjalanan
-                </option>
-            `;
-
-
-            allFeatures.forEach(
-                function(feature) {
-
-                    const p =
-                        feature.properties;
-
-                    const tripId =
-                        getTripId(p);
+            if (
+                !coordinates ||
+                coordinates.length === 0
+            ) {
+                return;
+            }
 
 
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
+            const startCoord =
+                coordinates[0];
+
+            const endCoord =
+                coordinates[
+                    coordinates.length - 1
+                ];
 
 
-                    option.value =
-                        tripId;
+            const startLatLng = [
+                startCoord[1],
+                startCoord[0]
+            ];
+
+            const endLatLng = [
+                endCoord[1],
+                endCoord[0]
+            ];
 
 
-                    option.textContent =
-                        `Trip ${tripId} — ${getTrayek(p)}`;
+            const startMarker =
+                L.marker(
+                    startLatLng,
+                    {
+                        icon: startIcon,
+                        zIndexOffset: 1000
+                    }
+                );
 
 
-                    tripFilter.appendChild(
-                        option
-                    );
+            startMarker.bindTooltip(
+                `START — Trip ${tripId}`,
+                {
+                    direction: "top",
+                    offset: [
+                        0,
+                        -8
+                    ]
                 }
             );
-        }
 
 
-        // ==================================
-        // ROUTE LAYER
-        // ==================================
+            startMarker.bindPopup(`
+                <b>START</b><br>
+                Trip ${tripId}<br>
+                ${getTrayek(
+                    feature.properties
+                )}
+            `);
 
-        routeLayer =
-            L.geoJSON(
-                data,
+
+            startMarker.tripId =
+                tripId;
+
+
+            startEndLayer.addLayer(
+                startMarker
+            );
+
+
+            const endMarker =
+                L.marker(
+                    endLatLng,
+                    {
+                        icon: endIcon,
+                        zIndexOffset: 1000
+                    }
+                );
+
+
+            endMarker.bindTooltip(
+                `END — Trip ${tripId}`,
                 {
+                    direction: "top",
+                    offset: [
+                        0,
+                        -8
+                    ]
+                }
+            );
 
-                    style:
-                        function(feature) {
 
-                            const tripId =
-                                getTripId(
-                                    feature.properties
+            endMarker.bindPopup(`
+                <b>END</b><br>
+                Trip ${tripId}<br>
+                ${getTrayek(
+                    feature.properties
+                )}
+            `);
+
+
+            endMarker.tripId =
+                tripId;
+
+
+            startEndLayer.addLayer(
+                endMarker
+            );
+        }
+    );
+}
+
+
+// ==========================================
+// 18. UPDATE START / END MARKER
+// ==========================================
+
+function updateStartEndMarkers(
+    filter
+) {
+
+    if (!startEndLayer) {
+        return;
+    }
+
+
+    startEndLayer.eachLayer(
+        function(marker) {
+
+            if (
+                filter === "all"
+            ) {
+
+                marker.setOpacity(
+                    1
+                );
+
+            } else if (
+                Array.isArray(filter)
+            ) {
+
+                if (
+                    filter.includes(
+                        marker.tripId
+                    )
+                ) {
+
+                    marker.setOpacity(
+                        1
+                    );
+
+                } else {
+
+                    marker.setOpacity(
+                        0
+                    );
+                }
+
+            } else {
+
+                if (
+                    marker.tripId ===
+                    Number(filter)
+                ) {
+
+                    marker.setOpacity(
+                        1
+                    );
+
+                } else {
+
+                    marker.setOpacity(
+                        0
+                    );
+                }
+            }
+        }
+    );
+}
+
+
+// ==========================================
+// 19. LOAD GEOJSON
+// ==========================================
+
+fetch(
+    "data/rute_final.geojson"
+)
+
+    .then(
+        function(response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "rute_final.geojson tidak ditemukan"
+                );
+            }
+
+            return response.json();
+        }
+    )
+
+
+    .then(
+        function(data) {
+
+            console.log(
+                "GeoJSON OSRM berhasil dimuat:",
+                data
+            );
+
+
+            if (
+                !data.features ||
+                data.features.length === 0
+            ) {
+
+                throw new Error(
+                    "GeoJSON tidak memiliki data"
+                );
+            }
+
+
+            allFeatures =
+                data.features;
+
+
+            // ==============================
+            // SUMMARY AWAL
+            // ==============================
+
+            updateSummary(
+                allFeatures
+            );
+
+
+            // ==============================
+            // FUEL RECEIPT AWAL
+            // ==============================
+
+            updateFuelReceipt(
+                allFeatures,
+                "Semua Perjalanan"
+            );
+
+
+            // ==============================
+            // FILTER
+            // ==============================
+
+            const tripFilter =
+                document.getElementById(
+                    "trip-filter"
+                );
+
+
+            if (tripFilter) {
+
+                tripFilter.innerHTML = `
+                    <option value="all">
+                        Semua Perjalanan
+                    </option>
+                `;
+
+
+                allFeatures.forEach(
+                    function(feature) {
+
+                        const p =
+                            feature.properties;
+
+                        const tripId =
+                            getTripId(p);
+
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            tripId;
+
+
+                        option.textContent =
+                            `Trip ${tripId} — ${getTrayek(p)}`;
+
+
+                        tripFilter.appendChild(
+                            option
+                        );
+                    }
+                );
+            }
+
+
+            // ==============================
+            // ROUTE LAYER
+            // ==============================
+
+            routeLayer =
+                L.geoJSON(
+                    data,
+                    {
+
+                        style:
+                            function(feature) {
+
+                                const tripId =
+                                    getTripId(
+                                        feature.properties
+                                    );
+
+
+                                return {
+
+                                    color:
+                                        colors[
+                                            tripId - 1
+                                        ] ||
+                                        "#e41a1c",
+
+                                    weight: 5,
+
+                                    opacity: 0.9
+                                };
+                            },
+
+
+                        onEachFeature:
+                            function(
+                                feature,
+                                layer
+                            ) {
+
+                                const p =
+                                    feature.properties;
+
+
+                                layer.bindPopup(
+                                    createPopup(p),
+                                    {
+                                        autoPan: true,
+
+                                        autoPanPadding: [
+                                            40,
+                                            40
+                                        ],
+
+                                        closeButton: true,
+
+                                        maxWidth: 320,
+
+                                        minWidth: 250
+                                    }
                                 );
 
 
-                            return {
+                                // HOVER
+                                layer.on(
+                                    "mouseover",
+                                    function() {
 
-                                color:
-                                    colors[
-                                        tripId - 1
-                                    ] || "#e41a1c",
-
-                                weight: 5,
-
-                                opacity: 0.9
-                            };
-                        },
+                                        const selected =
+                                            tripFilter
+                                                ? tripFilter.value
+                                                : "all";
 
 
-                    onEachFeature:
-                        function(
-                            feature,
-                            layer
-                        ) {
+                                        if (
+                                            selected !== "all" &&
+                                            Number(selected) !==
+                                            getTripId(p)
+                                        ) {
 
-                            const p =
-                                feature.properties;
+                                            return;
+                                        }
 
-
-                            // ==================================
-                            // POPUP
-                            // ==================================
-
-                            // EDITAN:
-                            // Popup dibuat tetap di dalam
-                            // area peta dengan autoPan.
-
-                            layer.bindPopup(
-                                createPopup(p),
-                                {
-                                    autoPan: true,
-                                    autoPanPadding: [
-                                        40,
-                                        40
-                                    ],
-                                    closeButton: true,
-                                    maxWidth: 320,
-                                    minWidth: 250
-                                }
-                            );
-
-
-                            // HOVER
-                            layer.on(
-                                "mouseover",
-                                function() {
-
-                                    const selected =
-                                        tripFilter
-                                            ? tripFilter.value
-                                            : "all";
-
-
-                                    // ==================================
-                                    // EDITAN:
-                                    // Route yang tidak dipilih
-                                    // tidak boleh melakukan hover
-                                    // ==================================
-
-                                    if (
-                                        selected !== "all" &&
-                                        Number(selected) !== getTripId(p)
-                                    ) {
-                                        return;
-                                    }
-
-
-                                    layer.setStyle({
-
-                                        weight: 8,
-
-                                        opacity: 1
-                                    });
-
-                                    layer.bringToFront();
-                                }
-                            );
-
-
-                            layer.on(
-                                "mouseout",
-                                function() {
-
-                                    const selected =
-                                        tripFilter
-                                            ? tripFilter.value
-                                            : "all";
-
-
-                                    if (
-                                        selected === "all"
-                                    ) {
-
-                                        layer.setStyle({
-
-                                            weight: 5,
-
-                                            opacity: 0.9
-                                        });
-
-                                    } else if (
-                                        Number(selected) ===
-                                        getTripId(p)
-                                    ) {
 
                                         layer.setStyle({
 
@@ -872,193 +1157,285 @@ fetch("data/rute_final.geojson")
                                             opacity: 1
                                         });
 
-                                    } else {
 
-                                        layer.setStyle({
-
-                                            weight: 4,
-
-                                            opacity: 0.15
-                                        });
+                                        layer.bringToFront();
                                     }
-                                }
+                                );
+
+
+                                layer.on(
+                                    "mouseout",
+                                    function() {
+
+                                        const selected =
+                                            tripFilter
+                                                ? tripFilter.value
+                                                : "all";
+
+
+                                        if (
+                                            selected === "all"
+                                        ) {
+
+                                            layer.setStyle({
+
+                                                weight: 5,
+
+                                                opacity: 0.9
+                                            });
+
+                                        } else if (
+                                            Number(selected) ===
+                                            getTripId(p)
+                                        ) {
+
+                                            layer.setStyle({
+
+                                                weight: 8,
+
+                                                opacity: 1
+                                            });
+
+                                        } else {
+
+                                            layer.setStyle({
+
+                                                weight: 4,
+
+                                                opacity: 0.15
+                                            });
+                                        }
+                                    }
+                                );
+
+
+                                // CLICK
+                                layer.on(
+                                    "click",
+                                    function() {
+
+                                        updateTripInfo(
+                                            p
+                                        );
+
+
+                                        if (
+                                            tripFilter
+                                        ) {
+
+                                            tripFilter.value =
+                                                getTripId(p);
+                                        }
+
+
+                                        updateSummary([
+                                            feature
+                                        ]);
+
+
+                                        updateFuelReceipt(
+                                            [feature],
+                                            `Trip ${getTripId(p)}`
+                                        );
+
+
+                                        highlightTrip(
+                                            getTripId(p)
+                                        );
+                                    }
+                                );
+                            }
+                    }
+                ).addTo(map);
+
+
+            // ==============================
+            // START / END MARKER
+            // ==============================
+
+            createStartEndMarkers(
+                allFeatures
+            );
+
+
+            updateStartEndMarkers(
+                "all"
+            );
+
+
+            // ==============================
+            // ZOOM SEMUA RUTE
+            // ==============================
+
+            const bounds =
+                routeLayer.getBounds();
+
+
+            if (
+                bounds.isValid()
+            ) {
+
+                map.fitBounds(
+                    bounds,
+                    {
+                        padding: [
+                            30,
+                            30
+                        ]
+                    }
+                );
+            }
+
+
+            // ==============================
+            // LEGEND
+            // ==============================
+
+            createLegend();
+
+
+            // ==============================
+            // FILTER EVENT
+            // ==============================
+
+            if (tripFilter) {
+
+                tripFilter.addEventListener(
+                    "change",
+                    function() {
+
+                        const value =
+                            this.value;
+
+
+                        // SEMUA TRIP
+                        if (
+                            value === "all"
+                        ) {
+
+                            resetRoutes();
+
+
+                            updateSummary(
+                                allFeatures
                             );
 
 
-                            // CLICK
-                            layer.on(
-                                "click",
-                                function() {
-
-                                    updateTripInfo(p);
+                            updateFuelReceipt(
+                                allFeatures,
+                                "Semua Perjalanan"
+                            );
 
 
-                                    if (tripFilter) {
-
-                                        tripFilter.value =
-                                            getTripId(p);
-                                    }
+                            updateStartEndMarkers(
+                                "all"
+                            );
 
 
-                                    updateSummary([
-                                        feature
-                                    ]);
+                            if (
+                                allFeatures.length > 0
+                            ) {
+
+                                updateTripInfo(
+                                    allFeatures[0]
+                                        .properties
+                                );
+                            }
+
+                            return;
+                        }
 
 
-                                    highlightTrip(
-                                        getTripId(p)
+                        // TRIP TERTENTU
+                        const selectedFeature =
+                            allFeatures.find(
+                                function(feature) {
+
+                                    return (
+                                        getTripId(
+                                            feature.properties
+                                        ) ===
+                                        Number(value)
                                     );
                                 }
                             );
-                        }
-                }
-            ).addTo(map);
 
-
-        // ==================================
-        // ZOOM SEMUA RUTE
-        // ==================================
-
-        const bounds =
-            routeLayer.getBounds();
-
-
-        if (
-            bounds.isValid()
-        ) {
-
-            map.fitBounds(
-                bounds,
-                {
-                    padding: [
-                        30,
-                        30
-                    ]
-                }
-            );
-        }
-
-
-        // ==================================
-        // LEGEND
-        // ==================================
-
-        createLegend();
-
-
-        // ==================================
-        // FILTER EVENT
-        // ==================================
-
-        if (tripFilter) {
-
-            tripFilter.addEventListener(
-                "change",
-                function() {
-
-                    const value =
-                        this.value;
-
-
-                    // SEMUA TRIP
-                    if (
-                        value === "all"
-                    ) {
-
-                        resetRoutes();
-
-                        updateSummary(
-                            allFeatures
-                        );
 
                         if (
-                            allFeatures.length > 0
+                            selectedFeature
                         ) {
 
                             updateTripInfo(
-                                allFeatures[0]
-                                    .properties
+                                selectedFeature.properties
+                            );
+
+
+                            updateSummary([
+                                selectedFeature
+                            ]);
+
+
+                            updateFuelReceipt(
+                                [selectedFeature],
+                                `Trip ${value}`
+                            );
+
+
+                            updateStartEndMarkers(
+                                Number(value)
+                            );
+
+
+                            highlightTrip(
+                                Number(value)
                             );
                         }
-
-                        return;
                     }
+                );
+            }
 
 
-                    // TRIP TERTENTU
-                    const selectedFeature =
-                        allFeatures.find(
-                            function(feature) {
+            // ==============================
+            // DEFAULT TRIP
+            // ==============================
 
-                                return (
-                                    getTripId(
-                                        feature.properties
-                                    ) ===
-                                    Number(value)
-                                );
-                            }
-                        );
+            if (
+                allFeatures.length > 0
+            ) {
 
+                updateTripInfo(
+                    allFeatures[0].properties
+                );
+            }
 
-                    if (
-                        selectedFeature
-                    ) {
-
-                        updateTripInfo(
-                            selectedFeature.properties
-                        );
+        }
+    )
 
 
-                        updateSummary([
-                            selectedFeature
-                        ]);
+    .catch(
+        function(error) {
+
+            console.error(
+                "ERROR:",
+                error
+            );
 
 
-                        highlightTrip(
-                            Number(value)
-                        );
-                    }
-                }
+            alert(
+                "Gagal memuat data rute. " +
+                "Pastikan server dijalankan dari folder roadtrack."
             );
         }
-
-
-        // ==================================
-        // DEFAULT TRIP
-        // ==================================
-
-        if (
-            allFeatures.length > 0
-        ) {
-
-            updateTripInfo(
-                allFeatures[0].properties
-            );
-        }
-
-    })
-
-
-    .catch(function(error) {
-
-        console.error(
-            "ERROR:",
-            error
-        );
-
-
-        alert(
-            "Gagal memuat data rute. " +
-            "Pastikan server dijalankan dari folder roadtrack."
-        );
-    });
+    );
 
 
 // ==========================================
-// 17. HIGHLIGHT TRIP
+// 20. HIGHLIGHT TRIP
 // ==========================================
 
-function highlightTrip(tripId) {
+function highlightTrip(
+    tripId
+) {
 
     if (!routeLayer) {
         return;
@@ -1091,11 +1468,6 @@ function highlightTrip(tripId) {
                 });
 
 
-                // ==================================
-                // EDITAN:
-                // ROUTE TERPILIH AKTIF
-                // ==================================
-
                 setRouteInteraction(
                     layer,
                     true
@@ -1114,12 +1486,6 @@ function highlightTrip(tripId) {
                 });
 
 
-                // ==================================
-                // EDITAN:
-                // ROUTE LAIN TIDAK BISA
-                // MENERIMA KURSOR / CLICK
-                // ==================================
-
                 setRouteInteraction(
                     layer,
                     false
@@ -1128,10 +1494,6 @@ function highlightTrip(tripId) {
         }
     );
 
-
-    // ==================================
-    // ZOOM KE TRIP
-    // ==================================
 
     const selectedLayer =
         routeLayer
@@ -1143,10 +1505,12 @@ function highlightTrip(tripId) {
                         return false;
                     }
 
+
                     return (
                         getTripId(
                             layer.feature.properties
-                        ) === Number(tripId)
+                        ) ===
+                        Number(tripId)
                     );
                 }
             );
@@ -1171,21 +1535,23 @@ function highlightTrip(tripId) {
                         60,
                         60
                     ],
+
                     maxZoom: 10
                 }
             );
         }
     }
+
+
+    updateStartEndMarkers(
+        Number(tripId)
+    );
 }
 
 
 // ==========================================
-// 17B. AKTIF / NONAKTIFKAN INTERAKSI ROUTE
+// 21. AKTIF / NONAKTIFKAN INTERAKSI ROUTE
 // ==========================================
-
-// EDITAN TAMBAHAN:
-// Route yang tidak aktif dibuat tidak bisa
-// menerima hover maupun click.
 
 function setRouteInteraction(
     layer,
@@ -1217,7 +1583,7 @@ function setRouteInteraction(
 
 
 // ==========================================
-// 18. RESET ROUTES
+// 22. RESET ROUTES
 // ==========================================
 
 function resetRoutes() {
@@ -1238,16 +1604,16 @@ function resetRoutes() {
             });
 
 
-            // ==================================
-            // EDITAN:
-            // SEMUA ROUTE AKTIF KEMBALI
-            // ==================================
-
             setRouteInteraction(
                 layer,
                 true
             );
         }
+    );
+
+
+    updateStartEndMarkers(
+        "all"
     );
 
 
@@ -1273,7 +1639,7 @@ function resetRoutes() {
 
 
 // ==========================================
-// 19. LEGEND
+// 23. LEGEND
 // ==========================================
 
 function createLegend() {
@@ -1340,7 +1706,7 @@ function createLegend() {
 
 
 // ==========================================
-// 20. DEBUG
+// 24. DEBUG
 // ==========================================
 
 console.log(
@@ -1349,10 +1715,9 @@ console.log(
 
 
 // ==========================================
-// 21. SELECT DAY
+// 25. SELECT DAY
 // ==========================================
 
-// Mapping hari ke trip
 const dayTrips = {
 
     1: [1, 2, 3],
@@ -1371,11 +1736,11 @@ const dayTrips = {
 };
 
 
-// Ambil kedua filter
 const routeFilterElement =
     document.getElementById(
         "trip-filter"
     );
+
 
 const dayFilterElement =
     document.getElementById(
@@ -1384,15 +1749,15 @@ const dayFilterElement =
 
 
 // ==========================================
-// 22. FILTER STATE
+// 26. FILTER STATE
 // ==========================================
 
-// Menandai filter mana yang sedang digunakan
-let activeFilter = "none";
+let activeFilter =
+    "none";
 
 
 // ==========================================
-// 23. FILTER LOCK
+// 27. FILTER LOCK
 // ==========================================
 
 function updateFilterLock() {
@@ -1404,10 +1769,6 @@ function updateFilterLock() {
         return;
     }
 
-
-    // ======================================
-    // ROUTE AKTIF
-    // ======================================
 
     if (
         activeFilter === "route"
@@ -1423,10 +1784,6 @@ function updateFilterLock() {
     }
 
 
-    // ======================================
-    // DAY AKTIF
-    // ======================================
-
     if (
         activeFilter === "day"
     ) {
@@ -1441,10 +1798,6 @@ function updateFilterLock() {
     }
 
 
-    // ======================================
-    // TIDAK ADA FILTER AKTIF
-    // ======================================
-
     routeFilterElement.disabled =
         false;
 
@@ -1454,7 +1807,7 @@ function updateFilterLock() {
 
 
 // ==========================================
-// 24. SELECT ROUTE
+// 28. SELECT ROUTE
 // ==========================================
 
 if (routeFilterElement) {
@@ -1467,10 +1820,7 @@ if (routeFilterElement) {
                 this.value;
 
 
-            // ==================================
             // SEMUA PERJALANAN
-            // ==================================
-
             if (
                 value === "all"
             ) {
@@ -1488,8 +1838,20 @@ if (routeFilterElement) {
 
                 resetRoutes();
 
+
                 updateSummary(
                     allFeatures
+                );
+
+
+                updateFuelReceipt(
+                    allFeatures,
+                    "Semua Perjalanan"
+                );
+
+
+                updateStartEndMarkers(
+                    "all"
                 );
 
 
@@ -1498,7 +1860,8 @@ if (routeFilterElement) {
                 ) {
 
                     updateTripInfo(
-                        allFeatures[0].properties
+                        allFeatures[0]
+                            .properties
                     );
                 }
 
@@ -1509,15 +1872,11 @@ if (routeFilterElement) {
             }
 
 
-            // ==================================
             // ROUTE TERTENTU
-            // ==================================
-
             activeFilter =
                 "route";
 
 
-            // Pastikan Select Day kembali ALL
             if (dayFilterElement) {
 
                 dayFilterElement.value =
@@ -1553,6 +1912,17 @@ if (routeFilterElement) {
                 ]);
 
 
+                updateFuelReceipt(
+                    [selectedFeature],
+                    `Trip ${value}`
+                );
+
+
+                updateStartEndMarkers(
+                    Number(value)
+                );
+
+
                 highlightTrip(
                     Number(value)
                 );
@@ -1566,7 +1936,7 @@ if (routeFilterElement) {
 
 
 // ==========================================
-// 25. SELECT DAY
+// 29. SELECT DAY
 // ==========================================
 
 if (dayFilterElement) {
@@ -1579,10 +1949,7 @@ if (dayFilterElement) {
                 this.value;
 
 
-            // ==================================
             // SEMUA HARI
-            // ==================================
-
             if (
                 selectedDay === "all"
             ) {
@@ -1600,8 +1967,20 @@ if (dayFilterElement) {
 
                 resetRoutes();
 
+
                 updateSummary(
                     allFeatures
+                );
+
+
+                updateFuelReceipt(
+                    allFeatures,
+                    "Semua Perjalanan"
+                );
+
+
+                updateStartEndMarkers(
+                    "all"
                 );
 
 
@@ -1610,7 +1989,8 @@ if (dayFilterElement) {
                 ) {
 
                     updateTripInfo(
-                        allFeatures[0].properties
+                        allFeatures[0]
+                            .properties
                     );
                 }
 
@@ -1621,15 +2001,11 @@ if (dayFilterElement) {
             }
 
 
-            // ==================================
             // HARI TERTENTU
-            // ==================================
-
             activeFilter =
                 "day";
 
 
-            // Pastikan Select Route kembali ALL
             if (routeFilterElement) {
 
                 routeFilterElement.value =
@@ -1637,14 +2013,12 @@ if (dayFilterElement) {
             }
 
 
-            // Ambil trip berdasarkan hari
             const selectedTrips =
                 dayTrips[
                     Number(selectedDay)
                 ] || [];
 
 
-            // Ambil feature berdasarkan hari
             const selectedFeatures =
                 allFeatures.filter(
                     function(feature) {
@@ -1658,19 +2032,26 @@ if (dayFilterElement) {
                 );
 
 
-            // ==================================
             // UPDATE SUMMARY
-            // ==================================
-
             updateSummary(
                 selectedFeatures
             );
 
 
-            // ==================================
-            // HIGHLIGHT ROUTE
-            // ==================================
+            // UPDATE FUEL RECEIPT
+            updateFuelReceipt(
+                selectedFeatures,
+                `Hari ${selectedDay}`
+            );
 
+
+            // UPDATE START / END
+            updateStartEndMarkers(
+                selectedTrips
+            );
+
+
+            // HIGHLIGHT ROUTE
             if (routeLayer) {
 
                 routeLayer.eachLayer(
@@ -1701,11 +2082,6 @@ if (dayFilterElement) {
                             });
 
 
-                            // ==================================
-                            // EDITAN:
-                            // ROUTE PADA HARI TERPILIH AKTIF
-                            // ==================================
-
                             setRouteInteraction(
                                 layer,
                                 true
@@ -1724,11 +2100,6 @@ if (dayFilterElement) {
                             });
 
 
-                            // ==================================
-                            // EDITAN:
-                            // ROUTE HARI LAIN NONAKTIF
-                            // ==================================
-
                             setRouteInteraction(
                                 layer,
                                 false
@@ -1738,10 +2109,7 @@ if (dayFilterElement) {
                 );
 
 
-                // ==================================
                 // ZOOM KE RUTE HARI TERPILIH
-                // ==================================
-
                 const selectedLayers =
                     routeLayer
                         .getLayers()
@@ -1794,23 +2162,17 @@ if (dayFilterElement) {
             }
 
 
-            // ==================================
             // DETAIL TRIP PERTAMA
-            // ==================================
-
             if (
                 selectedFeatures.length > 0
             ) {
 
                 updateTripInfo(
-                    selectedFeatures[0].properties
+                    selectedFeatures[0]
+                        .properties
                 );
             }
 
-
-            // ==================================
-            // LOCK FILTER
-            // ==================================
 
             updateFilterLock();
         }
@@ -1819,11 +2181,672 @@ if (dayFilterElement) {
 
 
 // ==========================================
-// 26. KLIK ROUTE PADA PETA
+// 30. FUEL RECEIPT
 // ==========================================
 
-// Kalau user klik garis route,
-// Select Route menjadi filter aktif.
+const FUEL_PRICE =
+    10000;
+
+
+function updateFuelReceipt(
+    features,
+    filterLabel =
+        "Semua Perjalanan"
+) {
+
+    const receiptRoute =
+        document.getElementById(
+            "receiptRoute"
+        );
+
+
+    const receiptDistance =
+        document.getElementById(
+            "receiptDistance"
+        );
+
+
+    const receiptFuel =
+        document.getElementById(
+            "receiptFuel"
+        );
+
+
+    const receiptPrice =
+        document.getElementById(
+            "receiptPrice"
+        );
+
+
+    const receiptCost =
+        document.getElementById(
+            "receiptCost"
+        );
+
+
+    if (
+        !features ||
+        features.length === 0
+    ) {
+
+        if (receiptRoute) {
+
+            receiptRoute.textContent =
+                "-";
+        }
+
+
+        if (receiptDistance) {
+
+            receiptDistance.textContent =
+                "-";
+        }
+
+
+        if (receiptFuel) {
+
+            receiptFuel.textContent =
+                "-";
+        }
+
+
+        if (receiptPrice) {
+
+            receiptPrice.textContent =
+                formatRupiah(
+                    FUEL_PRICE
+                ) +
+                " / L";
+        }
+
+
+        if (receiptCost) {
+
+            receiptCost.textContent =
+                "-";
+        }
+
+
+        return;
+    }
+
+
+    let totalDistance = 0;
+    let totalFuel = 0;
+    let totalCost = 0;
+
+
+    features.forEach(
+        function(feature) {
+
+            const p =
+                feature.properties;
+
+
+            totalDistance +=
+                Number(
+                    p.jarak_km
+                ) || 0;
+
+
+            totalFuel +=
+                Number(
+                    getFuel(p)
+                ) || 0;
+
+
+            totalCost +=
+                Number(
+                    getCost(p)
+                ) || 0;
+        }
+    );
+
+
+    let routeText =
+        filterLabel;
+
+
+    if (
+        features.length === 1
+    ) {
+
+        routeText =
+            getTrayek(
+                features[0].properties
+            );
+    }
+
+
+    if (receiptRoute) {
+
+        receiptRoute.textContent =
+            routeText;
+    }
+
+
+    if (receiptDistance) {
+
+        receiptDistance.textContent =
+            formatNumber(
+                totalDistance,
+                2
+            ) +
+            " km";
+    }
+
+
+    if (receiptFuel) {
+
+        receiptFuel.textContent =
+            formatNumber(
+                totalFuel,
+                2
+            ) +
+            " L";
+    }
+
+
+    if (receiptPrice) {
+
+        receiptPrice.textContent =
+            formatRupiah(
+                FUEL_PRICE
+            ) +
+            " / L";
+    }
+
+
+    if (receiptCost) {
+
+        receiptCost.textContent =
+            formatRupiah(
+                totalCost
+            );
+    }
+}
+
+
+// ==========================================
+// 31. PRINT FUEL RECEIPT
+// ==========================================
+
+function printFuelReceipt() {
+
+    const route =
+        document.getElementById(
+            "receiptRoute"
+        )?.textContent || "-";
+
+
+    const distance =
+        document.getElementById(
+            "receiptDistance"
+        )?.textContent || "-";
+
+
+    const fuel =
+        document.getElementById(
+            "receiptFuel"
+        )?.textContent || "-";
+
+
+    const price =
+        document.getElementById(
+            "receiptPrice"
+        )?.textContent || "-";
+
+
+    const cost =
+        document.getElementById(
+            "receiptCost"
+        )?.textContent || "-";
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=450,height=700"
+        );
+
+
+    if (!printWindow) {
+
+        alert(
+            "Pop-up diblokir browser. Izinkan pop-up untuk mencetak receipt."
+        );
+
+        return;
+    }
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html lang="en">
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                RoadTrack Fuel Receipt
+            </title>
+
+
+            <style>
+
+                * {
+                    box-sizing: border-box;
+                }
+
+
+                body {
+
+                    margin: 0;
+
+                    padding: 30px 15px;
+
+                    background: #f5f5f5;
+
+                    font-family:
+                        Arial,
+                        Helvetica,
+                        sans-serif;
+
+                    color: #333;
+                }
+
+
+                .receipt {
+
+                    width: 80mm;
+
+                    max-width: 100%;
+
+                    margin: 0 auto;
+
+                    padding: 25px 20px;
+
+                    background: white;
+
+                    box-shadow:
+                        0 5px 20px
+                        rgba(0, 0, 0, 0.12);
+                }
+
+
+                .receipt-header {
+
+                    text-align: center;
+
+                    padding-bottom: 15px;
+
+                    border-bottom:
+                        1px dashed #777;
+                }
+
+
+                .brand {
+
+                    font-size: 21px;
+
+                    font-weight: 800;
+
+                    letter-spacing: 1px;
+
+                    color: #444;
+                }
+
+
+                .subtitle {
+
+                    margin-top: 4px;
+
+                    font-size: 10px;
+
+                    color: #777;
+
+                    letter-spacing: 1.5px;
+
+                    text-transform: uppercase;
+                }
+
+
+                .receipt-icon {
+
+                    margin: 12px auto 0;
+
+                    width: 34px;
+
+                    height: 34px;
+
+                    display: flex;
+
+                    align-items: center;
+
+                    justify-content: center;
+
+                    border-radius: 50%;
+
+                    background: #f7e2ea;
+
+                    color: #9b657b;
+
+                    font-size: 16px;
+                }
+
+
+                .receipt-info {
+
+                    padding: 15px 0;
+
+                    border-bottom:
+                        1px dashed #777;
+                }
+
+
+                .row {
+
+                    display: flex;
+
+                    justify-content:
+                        space-between;
+
+                    align-items:
+                        flex-start;
+
+                    gap: 15px;
+
+                    padding: 6px 0;
+
+                    font-size: 11px;
+
+                    line-height: 1.4;
+                }
+
+
+                .label {
+
+                    color: #777;
+
+                    white-space: nowrap;
+                }
+
+
+                .value {
+
+                    color: #222;
+
+                    font-weight: 600;
+
+                    text-align: right;
+
+                    word-break: break-word;
+                }
+
+
+                .total {
+
+                    margin-top: 15px;
+
+                    padding: 13px 0;
+
+                    border-bottom:
+                        1px dashed #777;
+
+                    display: flex;
+
+                    justify-content:
+                        space-between;
+
+                    align-items:
+                        center;
+
+                    gap: 15px;
+                }
+
+
+                .total-label {
+
+                    font-size: 12px;
+
+                    font-weight: 700;
+
+                    color: #444;
+                }
+
+
+                .total-value {
+
+                    font-size: 17px;
+
+                    font-weight: 800;
+
+                    color: #9b657b;
+
+                    text-align: right;
+                }
+
+
+                .footer {
+
+                    padding-top: 17px;
+
+                    text-align: center;
+
+                    color: #777;
+
+                    font-size: 9px;
+
+                    line-height: 1.6;
+                }
+
+
+                .footer strong {
+
+                    display: block;
+
+                    color: #555;
+
+                    font-size: 10px;
+
+                    margin-bottom: 3px;
+                }
+
+
+                .thank-you {
+
+                    margin-top: 12px;
+
+                    font-size: 9px;
+
+                    letter-spacing: 0.5px;
+                }
+
+
+                @media print {
+
+                    body {
+
+                        padding: 0;
+
+                        background: white;
+                    }
+
+
+                    .receipt {
+
+                        width: 80mm;
+
+                        margin: 0;
+
+                        box-shadow: none;
+                    }
+
+
+                    @page {
+
+                        size: 80mm auto;
+
+                        margin: 0;
+                    }
+                }
+
+            </style>
+
+        </head>
+
+
+        <body>
+
+            <div class="receipt">
+
+                <div class="receipt-header">
+
+                    <div class="brand">
+                        ROADTRACK
+                    </div>
+
+                    <div class="subtitle">
+                        Fuel Receipt
+                    </div>
+
+                    <div class="receipt-icon">
+                        🧾
+                    </div>
+
+                </div>
+
+
+                <div class="receipt-info">
+
+                    <div class="row">
+
+                        <span class="label">
+                            Route
+                        </span>
+
+                        <span class="value">
+                            ${route}
+                        </span>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <span class="label">
+                            Distance
+                        </span>
+
+                        <span class="value">
+                            ${distance}
+                        </span>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <span class="label">
+                            Fuel Used
+                        </span>
+
+                        <span class="value">
+                            ${fuel}
+                        </span>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <span class="label">
+                            Fuel Price
+                        </span>
+
+                        <span class="value">
+                            ${price}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="total">
+
+                    <span class="total-label">
+                        TOTAL FUEL COST
+                    </span>
+
+                    <span class="total-value">
+                        ${cost}
+                    </span>
+
+                </div>
+
+
+                <div class="footer">
+
+                    <strong>
+                        RoadTrack Vehicle Monitoring
+                    </strong>
+
+                    Operational Car Route Monitoring
+
+                    <div class="thank-you">
+                        Thank you
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <script>
+
+                window.onload =
+                    function() {
+
+                        setTimeout(
+                            function() {
+
+                                window.print();
+
+                            },
+                            300
+                        );
+
+                    };
+
+
+                window.onafterprint =
+                    function() {
+
+                        window.close();
+
+                    };
+
+            <\/script>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+}
+
+
+// ==========================================
+// 32. KLIK ROUTE PADA PETA
+// ==========================================
 
 map.on(
     "popupopen",
@@ -1842,138 +2865,125 @@ map.on(
         updateFilterLock();
 
 
-        // ======================================
-        // EDITAN TAMBAHAN:
-        // PASTIKAN POPUP FULL DI DALAM MAP
-        // ======================================
+        setTimeout(
+            function() {
 
-        setTimeout(function() {
+                const popup =
+                    e.popup;
 
-            const popup =
-                e.popup;
+                const popupElement =
+                    popup.getElement();
 
-            const popupElement =
-                popup.getElement();
-
-            const mapElement =
-                map.getContainer();
+                const mapElement =
+                    map.getContainer();
 
 
-            if (
-                !popupElement ||
-                !mapElement
-            ) {
-                return;
-            }
+                if (
+                    !popupElement ||
+                    !mapElement
+                ) {
+
+                    return;
+                }
 
 
-            const popupRect =
-                popupElement.getBoundingClientRect();
-
-            const mapRect =
-                mapElement.getBoundingClientRect();
+                const popupRect =
+                    popupElement
+                        .getBoundingClientRect();
 
 
-            // Jarak aman dari tepi map
-            const padding = 15;
+                const mapRect =
+                    mapElement
+                        .getBoundingClientRect();
 
 
-            let moveX = 0;
-            let moveY = 0;
+                const padding =
+                    15;
 
 
-            // ==================================
-            // CEK SISI KIRI
-            // ==================================
+                let moveX = 0;
+                let moveY = 0;
 
-            if (
-                popupRect.left <
-                mapRect.left + padding
-            ) {
 
-                moveX =
+                if (
+                    popupRect.left <
                     mapRect.left +
-                    padding -
-                    popupRect.left;
-            }
+                    padding
+                ) {
+
+                    moveX =
+                        mapRect.left +
+                        padding -
+                        popupRect.left;
+                }
 
 
-            // ==================================
-            // CEK SISI KANAN
-            // ==================================
-
-            if (
-                popupRect.right >
-                mapRect.right - padding
-            ) {
-
-                moveX =
+                if (
+                    popupRect.right >
                     mapRect.right -
-                    padding -
-                    popupRect.right;
-            }
+                    padding
+                ) {
+
+                    moveX =
+                        mapRect.right -
+                        padding -
+                        popupRect.right;
+                }
 
 
-            // ==================================
-            // CEK SISI ATAS
-            // ==================================
-
-            if (
-                popupRect.top <
-                mapRect.top + padding
-            ) {
-
-                moveY =
+                if (
+                    popupRect.top <
                     mapRect.top +
-                    padding -
-                    popupRect.top;
-            }
+                    padding
+                ) {
+
+                    moveY =
+                        mapRect.top +
+                        padding -
+                        popupRect.top;
+                }
 
 
-            // ==================================
-            // CEK SISI BAWAH
-            // ==================================
-
-            if (
-                popupRect.bottom >
-                mapRect.bottom - padding
-            ) {
-
-                moveY =
+                if (
+                    popupRect.bottom >
                     mapRect.bottom -
-                    padding -
-                    popupRect.bottom;
-            }
+                    padding
+                ) {
+
+                    moveY =
+                        mapRect.bottom -
+                        padding -
+                        popupRect.bottom;
+                }
 
 
-            // ==================================
-            // GESER MAP
-            // ==================================
+                if (
+                    moveX !== 0 ||
+                    moveY !== 0
+                ) {
 
-            if (
-                moveX !== 0 ||
-                moveY !== 0
-            ) {
+                    map.panBy(
+                        [
+                            moveX,
+                            moveY
+                        ],
+                        {
+                            animate: true,
 
-                map.panBy(
-                    [
-                        moveX,
-                        moveY
-                    ],
-                    {
-                        animate: true,
-                        duration: 0.35
-                    }
-                );
-            }
+                            duration: 0.35
+                        }
+                    );
+                }
 
-        }, 100);
+            },
+            100
+        );
     }
 );
 
 
 // ==========================================
-// 27. STATUS FILTER AWAL
+// 33. STATUS FILTER AWAL
 // ==========================================
 
 updateFilterLock();
