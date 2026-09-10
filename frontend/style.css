@@ -705,6 +705,7 @@ footer {
     border-top: 1px solid #eadde4;
     padding: 20px 3px 5px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     color: #a18d96;
     font-size: 10px;
@@ -713,6 +714,16 @@ footer {
 footer strong {
     color: #6c5660;
     margin-right: 8px;
+}
+
+footer small {
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 9px;
+    color: #a18d96;
+    opacity: 0.65;
+    letter-spacing: 0.3px;
 }
 
 
@@ -822,4 +833,5 @@ footer strong {
         flex-direction: column;
         gap: 8px;
     }
+
 }
