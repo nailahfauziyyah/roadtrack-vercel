@@ -17,6 +17,8 @@ RoadTrack dikembangkan sebagai perpanjangan dari dataset yang diberikan pada tug
 - Estimasi durasi perjalanan
 - Estimasi penggunaan bahan bakar
 - Estimasi biaya bahan bakar
+- Fuel Receipt untuk menampilkan ringkasan penggunaan dan biaya bahan bakar
+- Print Receipt untuk mencetak fuel receipt
 - Visualisasi rute aktif pada peta
 - Informasi parameter kendaraan dan routing
 
@@ -57,6 +59,22 @@ Estimasi bahan bakar menggunakan asumsi:
 - Harga bahan bakar: Rp10.000/L
 
 Nilai bahan bakar dan biaya merupakan **estimasi**, bukan data pembelian bahan bakar secara aktual.
+
+## Fuel Receipt
+
+RoadTrack menyediakan fitur **Fuel Receipt** untuk menampilkan ringkasan estimasi bahan bakar berdasarkan rute atau perjalanan yang dipilih.
+
+Fuel Receipt menampilkan:
+
+- Route
+- Distance
+- Fuel Used
+- Fuel Price
+- Total Fuel Cost
+
+Fitur **Print Receipt** juga tersedia untuk mencetak hasil ringkasan fuel receipt.
+
+Nilai pada receipt mengikuti hasil perhitungan estimasi bahan bakar dan biaya berdasarkan data rute yang ditampilkan pada WebGIS.
 
 ## Trip Plan
 
@@ -99,6 +117,7 @@ roadtrack/
 - Biaya bahan bakar menggunakan asumsi harga Pertalite Rp10.000/L.
 - Nilai estimasi tidak merepresentasikan konsumsi bahan bakar aktual kendaraan.
 - Durasi perjalanan merupakan hasil routing dan dapat berbeda dengan kondisi perjalanan sebenarnya.
+- Fuel Receipt menampilkan hasil estimasi berdasarkan data dan parameter yang digunakan, bukan bukti pembelian bahan bakar aktual.
 
 ## Technology
 
@@ -114,5 +133,6 @@ roadtrack/
 
 ## Author
 
-**Nailah Fauziyyah**  
+**Nailah Fauziyyah**
+
 S1 Sistem Informasi — Telkom University
